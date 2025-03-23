@@ -1,40 +1,40 @@
 import hashlib
 import turtle
 
-# --- Definir caracteres aceitos ---
+# --- set caracteres allowed ---
 char_set = "0123456789abcdefghijklmnopqrstuvwxyz"
 
-# --- Novo Mapeamento Ampliado ---
-angle_map = {char: (i * (360 / len(char_set))) for i, char in enumerate(char_set)}  # ângulos distribuídos
-distance_map = {char: (i * 3) + 140 for i, char in enumerate(char_set)}  # distância entre 10 e ~100px
+# --- new Mapeamento amplied ---
+angle_map = {char: (i * (360 / len(char_set))) for i, char in enumerate(char_set)}  # distribute angles
+distance_map = {char: (i * 3) + 140 for i, char in enumerate(char_set)}  # distance betwen 10 and ~100px
 
-# --- Redução da Frase ---
+# --- phrase reduce ---
 def reduce_phrase(text):
-    """ Remove vogais e mantém apenas consoantes únicas para compactação. """
+    """ Remove vowels and mantain only unique consonants to compactation """
     vowels = "aeiouAEIOU"
     reduced_text = ''.join([char for char in text.lower() if char in char_set and char not in vowels])
     return ''.join(sorted(set(reduced_text), key=reduced_text.index))
 
-# --- Gerar Hash da Frase Reduzida ---
+# --- generate Hash from reduced phrase ---
 def generate_hash(text, length=30):
-    """ Gera um hash SHA-256 e retorna os primeiros `length` caracteres, convertendo para base 36. """
+    """ generate a hash SHA-256 and return first `length` characters, comverting to base 36. """
     reduced_text = reduce_phrase(text)
     full_hash = hashlib.sha256(reduced_text.encode()).hexdigest()
     
-    # Converter hexadecimal para alfanumérico (0-9, a-z)
+    # Convert hexadecimal to alfanumber (0-9, a-z)
     alphanumeric_hash = ''.join(char_set[int(char, 16) % len(char_set)] for char in full_hash[:length])
     
-    return alphanumeric_hash  # Retorna hash modificado
+    return alphanumeric_hash  # Return modified hash
 
-# --- Desenhar Sigilo a partir das Frases Externas ---
+# --- draw sigil from intention ---
 def draw_sigil(hash_string):
-    """ Converte um hash reduzido em um sigilo geométrico. """
+    """ Convert a reduced hash in a geometrical sigil. """
     screen = turtle.Screen()
     screen.bgcolor("black")
     
     t = turtle.Turtle()
     t.speed(0)
-    t.color("cyan")
+    t.color("cyan") #choose color
 
     for char in hash_string:
         t.forward(distance_map[char])
@@ -43,14 +43,14 @@ def draw_sigil(hash_string):
     t.hideturtle()
     screen.mainloop()
 
-# --- Entrada: Frases que Alguém Falou ---
-external_phrases = [
-    "loki"
-]
+# --- input: yous affirmative positive phrase ---
+intentions = [
+    " ", ""
+]# you can write to many phrases after comma 
 
-# --- Criar Sigilo a partir do Discurso Externo ---
-full_text = " ".join(external_phrases)  # Junta todas as frases
-hash_result = generate_hash(full_text)  # Gera um hash reduzido
-print(f"Hash Reduzido Alfanumérico: {hash_result}")  
+# --- create Sigil from intention  ---
+full_text = " ".join(intentions)  
+hash_result = generate_hash(full_text)  # generate a reduced hash
+print(f"Reduced Alphanumeric Hash: {hash_result}")  
 
 draw_sigil(hash_result)  # Desenha o sigilo
