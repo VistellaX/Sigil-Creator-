@@ -1,7 +1,7 @@
 # Sigil-Creator-
-Speed and faster Sigil generator to code your intentions.
+Speed and faster Sigil generator.
 
-this aplication uses sigilization tecnique from kaos magik to code your intentions.
+this aplication uses sigilization tecnique.
 
 how to use:
 - install pydroid.
